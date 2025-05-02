@@ -15,7 +15,18 @@ b = 30
 
 
 def densidadecampoeletrico(Q, R, const=False):
-    if const == False:
+    """
+        Calcula a densidade e o campo elétrico por meio da Lei de Coulomb.
+        - Quando const é Falso: calcula a densidade de cargas.
+        - Quando const é Verdadeiro: Calcula o campo elétrico.
+
+        :param Q: Valor da carga.
+        :param R: Valor do raio da esfera.
+        :param const: Constante de permissividade do meio.
+        :return: densidade: é o valor da densidade de cargas
+            ou se const for veradadeiro é o valor do campo elétrico
+    """
+    if not const:
         epsilon0 = 1
     else:
         epsilon0 = 8.854 * 10 ** (-12)
@@ -24,8 +35,15 @@ def densidadecampoeletrico(Q, R, const=False):
     return densidade
 
 
-# Lista que vai armazenar os valores de densidades
+# Função que vai armazenar os valores de densidades na lista
 def PreencheDensidade(a, b, const=False):
+    """
+        Prenche o vetor com os resultados da fórmula da Lei de Coulomb.
+        :param a:
+        :param b:
+        :param const:
+        :return: Retorna a lista Dr[] preenchida e convertida para vetor numpy
+    """
     Dr = []
     for i in R:
         if a < b:
@@ -44,11 +62,11 @@ def PreencheDensidade(a, b, const=False):
                 Dr.append(densidadecampoeletrico(Qa + Qb, i, const))
     return np.array(Dr)
 
-
+# Criação da figura que vai ter os gráficos
 figura, (eixo1, eixo2) = plt.subplots(2, 1, figsize=(7, 7))
 plt.subplots_adjust(left=0.2, bottom=0.40, hspace=0.6)  #espaço extra para os botões deslizantes
 
-#configuração do gráfico da densidade
+# Configuração do gráfico da densidade
 linha1, = eixo1.plot(R, PreencheDensidade(a, b), color='b')
 eixo1.set_xlabel('R (m)', size=10)
 eixo1.set_ylabel('Dr (C/m)', size=10)
